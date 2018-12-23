@@ -1,22 +1,6 @@
 const Discord = require("discord.js");
 const Client = new Discord.Client();
 const prefix = "!";
-const YTDL = require("ytdl-core);
-
-function play(connection, message){
-	var server = servers[message.guild.id];
-	
-	server.dispatcher = connection.playStream(YTDL(server.queue[0], {filter: "audioonly"}));
-	
-	server.queue.shift();
-	
-	server.dispatcher.on("end", function(){
-		if (server.queue[0]) play(connection, message);
-		else connection.disconnect();
-	});
-}
-
-var servers = {};
 
 
 Client.on('ready', async ()=>{
@@ -27,9 +11,7 @@ Client.on('ready', async ()=>{
 Client.on('message', (message)=>{
 	if(!message.content.startsWith(prefix)) return;
 	
-	var args = message.content.substring(prefix.length).split(" ");
-	
-	case "help":
+	if(message.content.startsWith(prefix + "help")){
 		message.channel.bulkDelete(1);
 		let botThumb = Client.user.displayAvatarURL;
 		let helpembedlevel = new Discord.RichEmbed()
@@ -50,9 +32,14 @@ Client.on('message', (message)=>{
 			.setThumbnail(banHammer)
 			
 			message.channel.send(helpembedadmin);
-		break;
-
-	case "clear":
+			return;
+	
+	}
+	
+	if(message.content.startsWith(prefix + "botika")){
+		message.channel.send("Botika spik english!");
+	}
+	if(message.content.startsWith(prefix + "clear")){
 		let args = message.content.split(" ").slice(1);
 		let author = message.member;
 		let role = message.guild.roles.find(role => role.name === "Moderator");
@@ -76,44 +63,33 @@ Client.on('message', (message)=>{
 			}})
 			return;
 		}
-		break;
+	}
 	
-	case "play":
-		var args = message.content.substring(prefix.length).split(" ");
-		if (!args[1] {
-			message.channel.sendMessage("!play [link]");
+	if(message.content.startsWith(prefix + "clear")){
+		let args = message.content.split(" ").slice(1);
+		let author = message.member;
+		let role = message.guild.roles.find(role => role.name === "Administrator");
+		if(author.roles.has(role.id)){
+			if(!args[0]){
+				message.delete();
+				message.author.send("Kérlek adj meg egy összeget!");
+				return;
+			}
+			if(!args[0] > 100){
+				message.delete();
+				message.author.send("Maximum 100 üzenetet törölhetsz!");
+				return;
+			}
+			
+			message.delete();
+			message.channel.bulkDelete(args[0]);
+			message.author.send({embed:{
+				color: 0x4286f4,
+				description: "Kész! Kitöröltem " + args[0] + " üzenetet."
+			}})
 			return;
 		}
-		
-		if (!message.member.voiceChannel) {
-			message.channel.sendMessage("Lépj be egy szobába először!");
-			return;
-		}
-		
-		if (!servers[message.guild.id])servers[message.guild.id] = {
-			queue: [message.guild.id]
-			return;
-		}
-		
-		var server = servers[message.guild.id];
-		
-		if (!message.guild.voiceConnection) message.member.voiceChannel.join().then(function(connection) {
-			play(connection, message);
-		});
-		break;
-	
-	case "skip":
-		var server = servers[message.guild.id];
-		
-		if (server.dispatcher) server.dispatcher.end();
-		break;
-
-	
-	case "leave":
-		var server = servers[message.guild.id];
-		
-		if (message.guild.voiceConnection) message.guild.voiceConnection.disconnect();
-		break;
+	}
 })
 
 Client.login("NTI2MzI2OTA0NzI3MjczNDcy.DwDkxA.zxqwboAyexrh4HfYHzwdbWSgckQ");
