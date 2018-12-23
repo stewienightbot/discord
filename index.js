@@ -92,4 +92,4 @@ Client.on('message', (message)=>{
 	}
 })
 
-Client.login("NTI2MzI2OTA0NzI3MjczNDcy.DwDkxA.zxqwboAyexrh4HfYHzwdbWSgckQ");
+Client.login("");
