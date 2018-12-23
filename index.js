@@ -1,6 +1,23 @@
 const Discord = require("discord.js");
 const Client = new Discord.Client();
 const prefix = "!";
+const YTDL = require("ytdl-core);
+
+function play(connection, message){
+	var server = servers[message.guild.id];
+	
+	server.dispatcher = connection.playStream(YTDL(server.queue[0], {filter: "audioonly"}));
+	
+	server.queue.shift();
+	
+	server.dispatcher.on("end", function(){
+		if (server.queue[0]) play(connection, message);
+		else connection.disconnect();
+	});
+}
+
+var servers = {};
+
 
 Client.on('ready', async ()=>{
 	console.log(`${Client.user.username} is online.`);
@@ -89,6 +106,45 @@ Client.on('message', (message)=>{
 			return;
 		}
 	}
+	
+	if(message.content.startsWith(prefix + "play")){
+		var args = message.content.substring(prefix.length).split(" ");
+		if (!args[1] {
+			message.channel.sendMessage("!play [link]");
+			return;
+		}
+		
+		if (!message.member.voiceChannel) {
+			message.channel.sendMessage("Lépj be egy szobába először!");
+			return;
+		}
+		
+		if (!servers[message.guild.id])servers[message.guild.id] = {
+			queue: [message.guild.id]
+			return;
+		}
+		
+		var server = servers[message.guild.id];
+		
+		if (!message.guild.voiceConnection) message.member.voiceChannel.join().then(function(connection) {
+			play(connection, message);
+		});
+		break;
+	}
+	
+	if(message.content.startsWith(prefix + "skip")){
+		var server = servers[message.guild.id];
+		
+		if (server.dispatcher) server.dispatcher.end();
+		break;
+	}
+	
+	if(message.content.startsWith(prefix + "stop")){
+		var server = servers[message.guild.id];
+		
+		if (message.guild.voiceConnection) message.guild.voiceConnection.disconnect();
+		break;
+	}
 })
 
-Client.login("NTI2MzI2OTA0NzI3MjczNDcy.DwDkxA.zxqwboAyexrh4HfYHzwdbWSgck");
+Client.login("NTI2MzI2OTA0NzI3MjczNDcy.DwDkxA.zxqwboAyexrh4HfYHzwdbWSgckQ");
