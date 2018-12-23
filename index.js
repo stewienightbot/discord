@@ -2,8 +2,6 @@ const Discord = require("discord.js");
 const Client = new Discord.Client();
 const prefix = "!";
 
-Client.login("process.env.BOT_TOKEN");
-
 Client.on('ready', async ()=>{
 	console.log(`${Client.user.username} is online.`);
 	Client.user.setActivity("Nightclubs Radio", {type: "LISTENING"});
@@ -93,4 +91,4 @@ Client.on('message', (message)=>{
 	}
 })
 
-
+Client.login("NTI2MzI2OTA0NzI3MjczNDcy.DwDkxA.zxqwboAyexrh4HfYHzwdbWSgckQ");
