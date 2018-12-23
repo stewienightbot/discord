@@ -2,6 +2,7 @@ const Discord = require("discord.js");
 const Client = new Discord.Client();
 const prefix = "!";
 
+Client.login("process.env.BOT_TOKEN");
 
 Client.on('ready', async ()=>{
 	console.log(`${Client.user.username} is online.`);
@@ -92,4 +93,4 @@ Client.on('message', (message)=>{
 	}
 })
 
-Client.login("process.env.BOT_TOKEN");
+
