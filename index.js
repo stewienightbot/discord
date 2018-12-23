@@ -27,7 +27,9 @@ Client.on('ready', async ()=>{
 Client.on('message', (message)=>{
 	if(!message.content.startsWith(prefix)) return;
 	
-	if(message.content.startsWith(prefix + "help")){
+	var args = message.content.substring(prefix.length).split(" ");
+	
+	case "help":
 		message.channel.bulkDelete(1);
 		let botThumb = Client.user.displayAvatarURL;
 		let helpembedlevel = new Discord.RichEmbed()
@@ -48,14 +50,9 @@ Client.on('message', (message)=>{
 			.setThumbnail(banHammer)
 			
 			message.channel.send(helpembedadmin);
-			return;
-	
-	}
-	
-	if(message.content.startsWith(prefix + "botika")){
-		message.channel.send("Botika spik english!");
-	}
-	if(message.content.startsWith(prefix + "clear")){
+		break;
+
+	case "clear":
 		let args = message.content.split(" ").slice(1);
 		let author = message.member;
 		let role = message.guild.roles.find(role => role.name === "Moderator");
@@ -79,35 +76,9 @@ Client.on('message', (message)=>{
 			}})
 			return;
 		}
-	}
+		break;
 	
-	if(message.content.startsWith(prefix + "clear")){
-		let args = message.content.split(" ").slice(1);
-		let author = message.member;
-		let role = message.guild.roles.find(role => role.name === "Administrator");
-		if(author.roles.has(role.id)){
-			if(!args[0]){
-				message.delete();
-				message.author.send("Kérlek adj meg egy összeget!");
-				return;
-			}
-			if(!args[0] > 100){
-				message.delete();
-				message.author.send("Maximum 100 üzenetet törölhetsz!");
-				return;
-			}
-			
-			message.delete();
-			message.channel.bulkDelete(args[0]);
-			message.author.send({embed:{
-				color: 0x4286f4,
-				description: "Kész! Kitöröltem " + args[0] + " üzenetet."
-			}})
-			return;
-		}
-	}
-	
-	if(message.content.startsWith(prefix + "play")){
+	case "play":
 		var args = message.content.substring(prefix.length).split(" ");
 		if (!args[1] {
 			message.channel.sendMessage("!play [link]");
@@ -130,21 +101,19 @@ Client.on('message', (message)=>{
 			play(connection, message);
 		});
 		break;
-	}
 	
-	if(message.content.startsWith(prefix + "skip")){
+	case "skip":
 		var server = servers[message.guild.id];
 		
 		if (server.dispatcher) server.dispatcher.end();
 		break;
-	}
+
 	
-	if(message.content.startsWith(prefix + "stop")){
+	case "leave":
 		var server = servers[message.guild.id];
 		
 		if (message.guild.voiceConnection) message.guild.voiceConnection.disconnect();
 		break;
-	}
 })
 
 Client.login("NTI2MzI2OTA0NzI3MjczNDcy.DwDkxA.zxqwboAyexrh4HfYHzwdbWSgckQ");
