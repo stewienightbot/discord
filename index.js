@@ -91,4 +91,4 @@ Client.on('message', (message)=>{
 	}
 })
 
-Client.login("process.env.token");
+Client.login("NTI2MzI2OTA0NzI3MjczNDcy.DwDkxA.zxqwboAyexrh4HfYHzwdbWSgckQ");
