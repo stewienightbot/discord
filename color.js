@@ -6,7 +6,8 @@ exports.run = async (Client, message, args) => {
     
     let str = args.join(" ");
     let role = colors.find(role => role.name.slice(1).toLowerCase() === str.toLowerCase());
-  
+    
+    if(!str) return message.channel.send("Nem adtál meg színt.");
     if(!role) return message.channel.send("Nem létezik ilyen szín.");
     
   try {

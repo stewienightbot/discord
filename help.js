@@ -7,6 +7,8 @@ exports.run = (Client, message, args) => {
 			.setColor("0x4286f4")
 			.addField("!levels", "Kérdezd le a ranglistát.")
 			.addField("!rank (optional member)", "Kérdezd le egy adott felhasználó rangját a szerveren.")
+      .addField("!color [color]", "Rang színének megváltoztatása.")
+      .addField("!colors", "Színes rangok listája.")
       .addField("!poll [question]", "Szavazás létrehozása.")
       .addField("!slots", "Nyerőgép pörgetése.")
       .addField("!dice", "Kocka pörgetése.")
